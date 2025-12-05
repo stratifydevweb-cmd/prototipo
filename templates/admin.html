@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Control{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <!-- Header -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Bienvenido al Panel de Control</h1>
+        <p class="text-gray-600">Usuario: <strong>{{ username }}</strong> | Rol: <strong>{{ rol }}</strong></p>
+    </div>
+
+    <!-- Estadísticas rápidas -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-blue-100 text-sm font-medium mb-1">Total de Pruebas</p>
+                    <p class="text-3xl font-bold">{{ total_pruebas_real if total_pruebas_real else 0 }}</p>
+                </div>
+                <div class="bg-blue-400 bg-opacity-30 rounded-full p-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-green-100 text-sm font-medium mb-1">Categorías</p>
+                    <p class="text-3xl font-bold">{{ datos_grafica|length }}</p>
+                </div>
+                <div class="bg-green-400 bg-opacity-30 rounded-full p-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-purple-100 text-sm font-medium mb-1">Categoría Principal</p>
+                    <p class="text-xl font-bold">
+                        {% if datos_grafica %}
+                            {{ datos_grafica[0].categoria }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="bg-purple-400 bg-opacity-30 rounded-full p-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráfica profesional -->
+    <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Distribución de Pruebas por Categoría</h2>
+            <p class="text-gray-600 text-sm">Análisis detallado de las pruebas realizadas según su categoría</p>
+        </div>
+        <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg">
+            <canvas id="graficaEstadoAdmin" height="80"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Pasar datos de Python a JavaScript -->
+<script>
+    const datosGrafica = {{ datos_grafica|tojson }};
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/script.js"></script>
+{% endblock %}

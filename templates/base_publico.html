@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Gestión{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[url('https://img.freepik.com/vector-gratis/antecedentes-laboratorios-ciencias-futuristas_23-2148505015.jpg?semt=ais_hybrid&w=740&q=80')] bg-cover bg-center min-h-screen">
+    <!-- Header simple -->
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
+

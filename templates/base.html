@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Gestión{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-blue-950 text-white flex flex-col">
+            <!-- User Info -->
+            <div class="p-4 border-b border-blue-600">
+                <h3 class="font-bold text-lg mb-1 uppercase">{{ username }}</h3>
+                <p class="text-blue-200 text-sm">Rol: {{ rol }}</p>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="flex-1 p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/admin" class="block px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            🏠 Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pacientes" class="block px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            👥 Pacientes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pruebas_paciente" class="block px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            📋 Pruebas Paciente
+                        </a>
+                    </li>
+                    {% if current_user == 'admin' or rol == 'admin' %}
+                    <li>
+                        <a href="/pruebas" class="block px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            🔬 Pruebas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/usuarios" class="block px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            👤 Usuarios
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a href="/informes" class="block px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            📊 Informes
+                        </a>
+                    </li>
+                    <li class="border-t border-blue-600 mt-4 pt-4">
+                        <a href="/logout" class="block px-4 py-2 rounded hover:bg-red-600 transition-colors">
+                            🚪 Cerrar Sesión
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-[url('https://img.freepik.com/vector-gratis/antecedentes-laboratorios-ciencias-futuristas_23-2148505015.jpg?semt=ais_hybrid&w=740&q=80')] bg-cover bg-center">
+            <div class="p-6">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
+
